@@ -1,0 +1,12 @@
+{
+    "name": "RamseyGameOfClique",
+    "version": "0.1.0",
+    "main": "index.html",
+    "window": {
+        "toolbar": true,
+        "width": 1200,
+        "height": 600
+    },
+    "dependencies": {
+    }
+}

@@ -69,10 +69,18 @@ html(lang='en')
         }
         s = new sigma({
             graph: g,
-            container: 'container',
-            settings: {
-                drawEdges: true
-            }
+            container: 'container'
         });
+
+        s.settings({
+            edgeColor: 'default',
+            defaultEdgeColor: 'grey',
+            drawEdges: true
+        });
+
+        s.refresh();
+
         // Start the ForceAtlas2 algorithm:
         s.startForceAtlas2({worker: true, barnesHutOptimize: false});
+
+        //s.refresh();

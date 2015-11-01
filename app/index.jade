@@ -6,10 +6,42 @@ html(lang='en')
             .pure-u-1.topHeaderSmaller
                 include includes/commons/_header
         .pure-g-r
-            .pure-u-1
-                div#gameContent
-                    p
-                        GRA
+            .pure-u-1#container
 
     script.
-        StartApplication();
+        // Let's first initialize sigma:
+        var s = new sigma('container');
+
+        // Then, let's add some data to display:
+        s.graph.addNode({
+            // Main attributes:
+            id: 'n0',
+            label: 'Hello',
+            // Display attributes:
+            x: 0,
+            y: 0,
+            size: 1,
+            color: '#f00'
+        }).addNode({
+            // Main attributes:
+            id: 'n1',
+            label: 'World !',
+            // Display attributes:
+            x: 0.5,
+            y: 0.5,
+            size: 1,
+            color: '#00f'
+        }).addEdge({
+            id: 'e0',
+            // Reference extremities:
+            source: 'n0',
+            target: 'n1'
+        });
+
+        s.settings({
+            edgeColor: 'default',
+            defaultEdgeColor: 'grey'
+        });
+
+        // Finally, let's ask our sigma instance to refresh:
+        s.refresh();

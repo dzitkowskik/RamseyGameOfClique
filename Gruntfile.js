@@ -7,7 +7,7 @@ module.exports = function (grunt) {
                 separator: ';'
             },
             libs: {
-                src: ['app/js/jquery.min.js', 'sigma.min.js'],
+                src: ['app/js/jquery.min.js', 'app/js/sigma.min.js'],
                 dest: 'dist/libs.js'
             },
             scripts: {

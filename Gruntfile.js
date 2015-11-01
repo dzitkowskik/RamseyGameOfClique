@@ -7,7 +7,7 @@ module.exports = function (grunt) {
                 separator: ';'
             },
             libs: {
-                src: ['app/js/jquery.min.js', 'node_modules/cytoscape/dist/cytoscape.js'],
+                src: ['app/js/jquery.min.js', 'sigma.min.js'],
                 dest: 'dist/libs.js'
             },
             scripts: {
@@ -49,7 +49,7 @@ module.exports = function (grunt) {
             }
         },
         jshint: {
-            files: ['Gruntfile.js', 'app/js/scripts.js', 'app/js/ramsey.js', 'node_modules/cytoscape/dist/cytoscape.js'],
+            files: ['Gruntfile.js', 'app/js/scripts.js', 'app/js/ramsey.js'],
             options: {
                 globals: {
                     console: true,

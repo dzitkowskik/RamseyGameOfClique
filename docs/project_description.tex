@@ -36,7 +36,10 @@
 
 %Treść:
 \section{Temat projektu}
-Projekt będzie realizował grę Ramseya. Jest to gra, w której ucział biorą 2 osoby. Planszą jest graf. Każdy z graczy stara się stworzyć klikę o zadanej wielkości. Na początku graf składa się ze skończonej, ustalonej liczby wierzchołków i nie zawiera krawędzi. Następnie gracze na przemian rysują krawędzie we własnym kolorze.Wygrywa gracz, który pierwszy utworzy klikę o zadanej wielkości.
+Projekt będzie realizował grę Ramseya, w której biorą udział 2 osoby.
+Planszą jest graf, który składa się ze skończonej, ustalonej liczby wierzchołków połączonych ze sobą szarymi
+krawędziami, tworząc graf pełny. Każdy z graczy stara się stworzyć klikę o zadanej wielkości zaznaczając
+na przemian krawędzie własnym kolorem. Wygrywa gracz, który pierwszy utworzy klikę o zadanej wielkości w swoim kolorze.
 
 \section{Aplikacja}
 Aplikacja będzie składała się z dwóch widoków: widoku menu oraz widoku gry.
@@ -46,14 +49,15 @@ W tym widoku będą znajdowały się przyciski:
 
 \begin{itemize}
 	\item start - rozpoczyna grę,
-	\item ustawiania wielkości kliki,
+	\item ustawiania wielkości kliki (wraz z polem do wpisania wielkości),
+	\item ustawiania wielkości planszy (wraz z polem do wpisania wielkości),
 	\item exit - wyjście z aplikacji.
 \end{itemize}
 
-
 \subsection{Widok gry}
-Ten widok będzie pojawiał się po rozpoczęciu rozgrywki. Bedzie on się składał z grafu. Gracze na przemian będą wybierali krawędzie, które po kliknięciu przyciskiem myszy będą kolorowały się na kolor gracza.
-
-
+Po rozpoczęciu rozgrywki pojawi się graf o ilości wierzchołków równej wielkości planszy, połączonych szarymi krawędziami.
+Gracze na przemian będą wybierali krawędzie, które po kliknięciu przyciskiem myszy będą kolorowały
+się na kolor gracza. W momencie utworzenia jednokolorowej kliki przez któregoś z graczy, wyświetlany
+będzie alert z wiadomością, który z graczy wygrał i po zatwierdzeniu nastąpi przekierowanie do widoku menu.
 
 \end{document}

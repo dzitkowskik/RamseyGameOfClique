@@ -1,6 +1,27 @@
 // program interface
 
+var firstPlayerColor = '#00FF00';
+var secondPlayerColor = '#0000FF';
+var defaultNodeColor = '#A3A3A3';
+var defaultEdgeColor = '#FAFAFA';
+var hooveredNodeColor = '#FFFF00';
+var clickedNodeColor = '#FF0000';
+
 var numberOfVertices = 24;
+
+/**
+ * @return {string}
+ */
+function GetNodeName(id) {
+    return 'node_' + id;
+}
+
+/**
+ * @return {string}
+ */
+function GetEdgeName(from, to) {
+    return 'edge_' + from + '-' + to;
+}
 
 function GenerateFullGraph(numberOfVertices) {
     var N = numberOfVertices;
@@ -9,7 +30,7 @@ function GenerateFullGraph(numberOfVertices) {
     // GENERATE NODES
     for(i = 0; i < N; i++) {
         g.nodes.push({
-            id: 'n' + i,
+            id: GetNodeName(i),
             label: 'Node' + i,
             x: 100 * Math.cos(2 * i * Math.PI / N),
             y: 100 * Math.sin(2 * i * Math.PI / N),
@@ -18,16 +39,21 @@ function GenerateFullGraph(numberOfVertices) {
         });
     }
 
+    var addEdge = function(from, to) {
+        g.edges.push({
+            id: GetEdgeName(GetNodeName(from), GetNodeName(to)),
+            source: GetNodeName(from),
+            target: GetNodeName(to),
+            color: defaultEdgeColor,
+            size: 5
+        });
+    };
+
     // ADD EDGES FROM EVERY NODE TO EVERY OTHER
     for (i = 0; i < N; i++) {
-        for(j = 0; j < N; j++) {
-            if(i != j) {
-                g.edges.push({
-                    id: 'edge_' + i + '-' + j,
-                    source: 'n' + i,
-                    target: 'n' + j
-                });
-            }
+        for(j = i+1; j < N; j++) {
+            addEdge(i, j);
+            addEdge(j, i);
         }
     }
 
@@ -41,9 +67,9 @@ function DrawGraphInContainer(c, g) {
     });
 
     s.settings({
-        edgeColor: 'default',
-        defaultEdgeColor: '#FAFAFA',
-        drawEdges: true
+        drawEdges: true,
+        scalingMode: 'inside',
+        sideMargin: 5
     });
 
     s.refresh();
@@ -57,9 +83,64 @@ function DrawGraphInContainer(c, g) {
     return s;
 }
 
+var from = '';
+var to = '';
+var turn = true;
+
 function StartApplication() {
     var g = GenerateFullGraph(numberOfVertices);
-    var s = DrawGraphInContainer('container', g);
+    var s = DrawGraphInContainer('graphContainer', g);
+
+    var setEdgeColor = function(color) {
+        if(from !== '' && to !== '') {
+            var fromTo = s.graph.edges(GetEdgeName(from, to));
+            var toFrom = s.graph.edges(GetEdgeName(to, from));
+
+            if (fromTo.color === defaultEdgeColor) {
+                fromTo.color = color;
+                toFrom.color = color;
+                turn = !turn;
+                s.refresh();
+            }
+
+            from = '';
+            to = '';
+        }
+    };
+
+    s.bind('overNode', function(e) {
+        var nodeId = e.data.node.id;
+        if(nodeId != from) {
+            color = hooveredNodeColor;
+            s.graph.nodes(nodeId).color = color;
+            s.refresh();
+        }
+    });
+
+    s.bind('outNode', function (e) {
+        var nodeId = e.data.node.id;
+        if(nodeId != from) {
+            color = defaultNodeColor;
+            s.graph.nodes(nodeId).color = color;
+            s.refresh();
+        }
+    });
+
+    s.bind('clickNode', function(e) {
+        var nodeId = e.data.node.id;
+        if(from === '') {
+            from = nodeId;
+            color = clickedNodeColor;
+            s.graph.nodes(nodeId).color = color;
+        } else {
+            to = nodeId;
+            color = defaultNodeColor;
+            s.graph.nodes(from).color = color;
+            if(turn) setEdgeColor(firstPlayerColor);
+            else setEdgeColor(secondPlayerColor);
+        }
+        s.refresh();
+    });
 }
 
 

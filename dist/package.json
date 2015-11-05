@@ -9,8 +9,5 @@
     },
     "dependencies": {
         "cytoscape": "~2.5.0"
-    },
-    "scripts": {
-      "test": "grunt"
-    },
+    }
 }

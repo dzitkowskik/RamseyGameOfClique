@@ -1,1 +1,3 @@
-// Tutaj będą algorytmy i logika gry
+function logika(){
+
+}

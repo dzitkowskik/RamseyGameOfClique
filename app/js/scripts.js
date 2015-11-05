@@ -1,5 +1,148 @@
-// tutaj będzie interfejs gry
+// program interface
 
-function StartApplication(){
-    alert('application started!');
+var firstPlayerColor = '#00FF00';
+var secondPlayerColor = '#0000FF';
+var defaultNodeColor = '#A3A3A3';
+var defaultEdgeColor = '#FAFAFA';
+var hooveredNodeColor = '#FFFF00';
+var clickedNodeColor = '#FF0000';
+
+var numberOfVertices = 24;
+
+/**
+ * @return {string}
+ */
+function GetNodeName(id) {
+    return 'node_' + id;
 }
+
+/**
+ * @return {string}
+ */
+function GetEdgeName(from, to) {
+    return 'edge_' + from + '-' + to;
+}
+
+function GenerateFullGraph(numberOfVertices) {
+    var N = numberOfVertices;
+    var i, j, g = { nodes: [], edges: [] };
+
+    // GENERATE NODES
+    for(i = 0; i < N; i++) {
+        g.nodes.push({
+            id: GetNodeName(i),
+            label: 'Node' + i,
+            x: 100 * Math.cos(2 * i * Math.PI / N),
+            y: 100 * Math.sin(2 * i * Math.PI / N),
+            size: 5,
+            color: '#A3A3A3'
+        });
+    }
+
+    var addEdge = function(from, to) {
+        g.edges.push({
+            id: GetEdgeName(GetNodeName(from), GetNodeName(to)),
+            source: GetNodeName(from),
+            target: GetNodeName(to),
+            color: defaultEdgeColor,
+            size: 5
+        });
+    };
+
+    // ADD EDGES FROM EVERY NODE TO EVERY OTHER
+    for (i = 0; i < N; i++) {
+        for(j = i+1; j < N; j++) {
+            addEdge(i, j);
+            addEdge(j, i);
+        }
+    }
+
+    return g;
+}
+
+function DrawGraphInContainer(c, g) {
+    s = new sigma({
+        graph: g,
+        container: c
+    });
+
+    s.settings({
+        drawEdges: true,
+        scalingMode: 'inside',
+        sideMargin: 5
+    });
+
+    s.refresh();
+    s.startForceAtlas2({
+        worker: false,
+        barnesHutOptimize: true,
+        slowDown: 250,
+        iterationsPerRender: 4});
+    setTimeout(function(){ s.stopForceAtlas2(); }, 4000);
+
+    return s;
+}
+
+var from = '';
+var to = '';
+var turn = true;
+
+function StartApplication() {
+    var g = GenerateFullGraph(numberOfVertices);
+    var s = DrawGraphInContainer('graphContainer', g);
+
+    var setEdgeColor = function(color) {
+        if(from !== '' && to !== '') {
+            var fromTo = s.graph.edges(GetEdgeName(from, to));
+            var toFrom = s.graph.edges(GetEdgeName(to, from));
+
+            if (fromTo.color === defaultEdgeColor) {
+                fromTo.color = color;
+                toFrom.color = color;
+                turn = !turn;
+                s.refresh();
+            }
+
+            from = '';
+            to = '';
+        }
+    };
+
+    s.bind('overNode', function(e) {
+        var nodeId = e.data.node.id;
+        if(nodeId != from) {
+            color = hooveredNodeColor;
+            s.graph.nodes(nodeId).color = color;
+            s.refresh();
+        }
+    });
+
+    s.bind('outNode', function (e) {
+        var nodeId = e.data.node.id;
+        if(nodeId != from) {
+            color = defaultNodeColor;
+            s.graph.nodes(nodeId).color = color;
+            s.refresh();
+        }
+    });
+
+    s.bind('clickNode', function(e) {
+        var nodeId = e.data.node.id;
+        if(from === '') {
+            from = nodeId;
+            color = clickedNodeColor;
+            s.graph.nodes(nodeId).color = color;
+        } else {
+            to = nodeId;
+            color = defaultNodeColor;
+            s.graph.nodes(from).color = color;
+            if(turn) setEdgeColor(firstPlayerColor);
+            else setEdgeColor(secondPlayerColor);
+        }
+        s.refresh();
+    });
+}
+
+
+
+

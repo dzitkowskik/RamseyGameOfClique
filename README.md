@@ -9,23 +9,23 @@
 
 ### Usage
 Grunt is used for building and deploying the app for mac, linux and windows.
-- Firstly cd to directory when you want to put the app and then: 
+- Firstly cd to directory when you want to put the app and then:
 ```sh
 $ git clone https://github.com/dzitkowskik/RamseyGameOfClique.git
-$ cd TimeSeriesReaderNW
+$ cd RamseyGameOfClique
 $ npm install
 ```
-- To build the app type: 
+- To build the app type:
 ```sh
 $ grunt
 ```
-- To run the app type: 
+- To run the app type:
 ```sh
 $ nw dist
 ```
 ALSO: The executable file will be created in /dist-pkt/releases/*** for each system.
 
-### Licence 
+### Licence
 The MIT License (MIT)
 
 Copyright (c) 2015 Karol Dzitkowski, Tomasz Janiszewski, Robert Jakubowski

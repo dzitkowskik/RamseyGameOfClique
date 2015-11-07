@@ -14,6 +14,14 @@
         </header>
       </div>
     </div>
+    <div class="newgame"></div>
+    <form name="new_game" action="/dist/index.html" method="get">
+      <label for="graph_size">Graph size:          </label>
+      <input type="number" name="graph_size">
+      <label for="minimal_clique_size">Minimal Clique size:</label>
+      <input type="number" name="minimal_clique_size">
+      <input type="submit" value="New Game">
+    </form>
     <div id="mainContainer" class="pure-g-r">
       <div id="graphContainer" class="pure-u-1"></div>
     </div>

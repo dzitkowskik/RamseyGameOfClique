@@ -1,5 +1,21 @@
 // program interface
 
+// Stack Overflow Content BEGIN
+// -- http://stackoverflow.com/a/979996/1387612 --
+var params = {};
+
+if (location.search) {
+    var parts = location.search.substring(1).split('&');
+
+    for (var i = 0; i < parts.length; i++) {
+        var nv = parts[i].split('=');
+        if (!nv[0]) continue;
+        params[nv[0]] = nv[1] || false;
+    }
+}
+// -----------------------
+// Stack Overflow Content END
+
 var firstPlayerColor = '#00FF00';
 var secondPlayerColor = '#0000FF';
 var defaultNodeColor = '#A3A3A3';
@@ -7,7 +23,10 @@ var defaultEdgeColor = '#FAFAFA';
 var hooveredNodeColor = '#FFFF00';
 var clickedNodeColor = '#FF0000';
 
-var numberOfVertices = 24;
+var numberOfVertices = params.graph_size || 10;
+var minimalCliqueSize = params.minimal_clique_size || 3;
+
+console.log(numberOfVertices)
 
 /**
  * @return {string}
@@ -87,14 +106,17 @@ var from = '';
 var to = '';
 var turn = true;
 
+var firstPlayerGraph = {};
+var secondPlayerGraph = {};
+
 function StartApplication() {
     var g = GenerateFullGraph(numberOfVertices);
     var s = DrawGraphInContainer('graphContainer', g);
 
-    var setEdgeColor = function(color) {
-        if(from !== '' && to !== '') {
-            var fromTo = s.graph.edges(GetEdgeName(from, to));
-            var toFrom = s.graph.edges(GetEdgeName(to, from));
+    var setEdgeColor = function(color, fromNode, toNode) {
+        if(fromNode !== '' && toNode !== '') {
+            var fromTo = s.graph.edges(GetEdgeName(fromNode, toNode));
+            var toFrom = s.graph.edges(GetEdgeName(toNode, fromNode));
 
             if (fromTo.color === defaultEdgeColor) {
                 fromTo.color = color;
@@ -102,10 +124,22 @@ function StartApplication() {
                 turn = !turn;
                 s.refresh();
             }
-
-            from = '';
-            to = '';
         }
+    };
+
+    var endTurn = function() {
+      from = to = '';
+    };
+
+    var addEdgeToPlayerGraph = function(graph, fromNode, toNode) {
+      if (!graph[fromNode]) {
+        graph[fromNode] = [];
+      }
+      if (!graph[toNode]) {
+        graph[toNode] = [];
+      }
+      graph[fromNode].push(toNode);
+      graph[toNode].push(fromNode);
     };
 
     s.bind('overNode', function(e) {
@@ -136,13 +170,18 @@ function StartApplication() {
             to = nodeId;
             color = defaultNodeColor;
             s.graph.nodes(from).color = color;
-            if(turn) setEdgeColor(firstPlayerColor);
-            else setEdgeColor(secondPlayerColor);
+            if(turn) {
+              setEdgeColor(firstPlayerColor, from, to);
+              addEdgeToPlayerGraph(firstPlayerGraph, from, to);
+              findClique(firstPlayerGraph, minimalCliqueSize);
+            }
+            else {
+              setEdgeColor(secondPlayerColor, from, to);
+              addEdgeToPlayerGraph(secondPlayerGraph, from, to);
+              findClique(secondPlayerGraph, minimalCliqueSize);
+            }
+            endTurn();
         }
         s.refresh();
     });
 }
-
-
-
-

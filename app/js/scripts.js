@@ -87,14 +87,17 @@ var from = '';
 var to = '';
 var turn = true;
 
+var firstPlayerGraph = {};
+var secondPlayerGraph = {};
+
 function StartApplication() {
     var g = GenerateFullGraph(numberOfVertices);
     var s = DrawGraphInContainer('graphContainer', g);
 
-    var setEdgeColor = function(color) {
-        if(from !== '' && to !== '') {
-            var fromTo = s.graph.edges(GetEdgeName(from, to));
-            var toFrom = s.graph.edges(GetEdgeName(to, from));
+    var setEdgeColor = function(color, fromNode, toNode) {
+        if(fromNode !== '' && toNode !== '') {
+            var fromTo = s.graph.edges(GetEdgeName(fromNode, toNode));
+            var toFrom = s.graph.edges(GetEdgeName(toNode, fromNode));
 
             if (fromTo.color === defaultEdgeColor) {
                 fromTo.color = color;
@@ -102,10 +105,22 @@ function StartApplication() {
                 turn = !turn;
                 s.refresh();
             }
-
-            from = '';
-            to = '';
         }
+    };
+
+    var endTurn = function() {
+      from = to = '';
+    };
+
+    var addEdgeToPlayerGraph = function(graph, fromNode, toNode) {
+      if (!graph[fromNode]) {
+        graph[fromNode] = [];
+      }
+      if (!graph[toNode]) {
+        graph[toNode] = [];
+      }
+      graph[fromNode].push(toNode);
+      graph[toNode].push(fromNode);
     };
 
     s.bind('overNode', function(e) {
@@ -136,13 +151,18 @@ function StartApplication() {
             to = nodeId;
             color = defaultNodeColor;
             s.graph.nodes(from).color = color;
-            if(turn) setEdgeColor(firstPlayerColor);
-            else setEdgeColor(secondPlayerColor);
+            if(turn) {
+              setEdgeColor(firstPlayerColor, from, to);
+              addEdgeToPlayerGraph(firstPlayerGraph, from, to);
+              findClique(firstPlayerGraph, 4);
+            }
+            else {
+              setEdgeColor(secondPlayerColor, from, to);
+              addEdgeToPlayerGraph(secondPlayerGraph, from, to);
+              findClique(secondPlayerGraph, 4);
+            }
+            endTurn();
         }
         s.refresh();
     });
 }
-
-
-
-

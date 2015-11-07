@@ -1,5 +1,21 @@
 // program interface
 
+// Stack Overflow Content BEGIN
+// -- http://stackoverflow.com/a/979996/1387612 --
+var params = {};
+
+if (location.search) {
+    var parts = location.search.substring(1).split('&');
+
+    for (var i = 0; i < parts.length; i++) {
+        var nv = parts[i].split('=');
+        if (!nv[0]) continue;
+        params[nv[0]] = nv[1] || false;
+    }
+}
+// -----------------------
+// Stack Overflow Content END
+
 var firstPlayerColor = '#00FF00';
 var secondPlayerColor = '#0000FF';
 var defaultNodeColor = '#A3A3A3';
@@ -7,7 +23,10 @@ var defaultEdgeColor = '#FAFAFA';
 var hooveredNodeColor = '#FFFF00';
 var clickedNodeColor = '#FF0000';
 
-var numberOfVertices = 24;
+var numberOfVertices = params.graph_size || 10;
+var minimalCliqueSize = params.minimal_clique_size || 3;
+
+console.log(numberOfVertices)
 
 /**
  * @return {string}
@@ -154,12 +173,12 @@ function StartApplication() {
             if(turn) {
               setEdgeColor(firstPlayerColor, from, to);
               addEdgeToPlayerGraph(firstPlayerGraph, from, to);
-              findClique(firstPlayerGraph, 4);
+              findClique(firstPlayerGraph, minimalCliqueSize);
             }
             else {
               setEdgeColor(secondPlayerColor, from, to);
               addEdgeToPlayerGraph(secondPlayerGraph, from, to);
-              findClique(secondPlayerGraph, 4);
+              findClique(secondPlayerGraph, minimalCliqueSize);
             }
             endTurn();
         }

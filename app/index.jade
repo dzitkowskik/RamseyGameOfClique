@@ -5,6 +5,13 @@ html(lang='en')
         .pure-g-r
             .pure-u-1.topHeaderSmaller
                 include includes/commons/_header
+        div.newgame
+        form(name="new_game", action="/dist/index.html", method="get")
+          label(for='graph_size') Graph size:          
+          input(type="number", name="graph_size")
+          label(for='minimal_clique_size') Minimal Clique size:
+          input(type="number", name="minimal_clique_size")
+          input(type="submit", value="New Game")
         .pure-g-r#mainContainer
             .pure-u-1#graphContainer
 

@@ -2,19 +2,36 @@ doctype html
 html(lang='en')
     include includes/commons/_head
     body
-        .pure-g-r
-            .pure-u-1.topHeaderSmaller
-                include includes/commons/_header
-        div.newgame
-        form(name="new_game", action="/dist/index.html", method="get")
-        //- form(name="new_game", action="http://dzitkowskik.github.io/RamseyGameOfClique/dist/index.html", method="get")
-          label(for='graph_size') Graph size:          
-          input(type="number", name="graph_size")
-          label(for='minimal_clique_size') Minimal Clique size:
-          input(type="number", name="minimal_clique_size")
-          input(type="submit", value="New Game")
-        .pure-g-r#mainContainer
-            .pure-u-1#graphContainer
+    
+      .white_content#first
+        <p>First player win.
+        <a href = "javascript:void(0)" onclick = "window.location.reload();">Close</a></p>
+        
+      .white_content#second
+        <p>First player win.
+        <a href = "javascript:void(0)" onclick = "window.location.reload();">Close</a></p>        
 
+      .black_overlay#fade
+  
+      .pure-g-r
+          .pure-u-1.topHeaderSmaller
+              include includes/commons/_header
+      .newgame
+        form(name="new_game", action="/dist/index.html", method="get")
+          .gprah-size
+            label(for='graph_size') Graph size:          
+            input(type="number", name="graph_size")
+          .clique-size
+            label(for='minimal_clique_size') Minimal Clique size:
+            input(type="number", name="minimal_clique_size")
+          .button
+            label(for='submit')
+            input(type="submit", value="New Game")
+      .pure-g-r#mainContainer
+          .pure-u-1#graphContainer
+            
+            
+    script(src='libs.js')
+    script(src='RamseyGameOfClique.js')
     script.
         StartApplication();

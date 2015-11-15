@@ -58,15 +58,6 @@ module.exports = function (grunt) {
                 force: true
             }
         },
-        nodewebkit: {
-            options: {
-                version: '0.11.6',
-                build_dir: './dist-pkg',
-                mac: true,
-                linux64: true
-            },
-            src: ['dist/**/*']
-        },
         stylus: {
             compile: {
                 files: {
@@ -111,6 +102,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-serve');
 
-    grunt.registerTask('default', ['copy', 'stylus', 'cssmin', 'jade', 'jshint', 'concat', 'uglify', 'nodewebkit']);
+    grunt.registerTask('default', ['copy', 'stylus', 'cssmin', 'jade', 'jshint', 'concat', 'uglify']);
     grunt.registerTask('dev', ['copy', 'stylus', 'cssmin', 'jade', 'jshint', 'concat']);
 };

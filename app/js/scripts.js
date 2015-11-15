@@ -114,7 +114,7 @@ var firstPlayerGraph = {};
 var secondPlayerGraph = {};
 
 function StartApplication() {
-    CleanScreen()
+    CleanScreen();
     firstPlayerGraph = {};
     secondPlayerGraph = {};
     var g = GenerateFullGraph(numberOfVertices);

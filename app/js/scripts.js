@@ -32,6 +32,11 @@ function CleanScreen() {
   document.getElementById('fade').style.display='none';
 }
 
+function ReloadGame() {
+    numberOfVertices = $('#graph_size').val();
+    minimalCliqueSize = $('#minimal_clique_size').val();
+    StartApplication();
+}
 /**
  * @return {string}
  */

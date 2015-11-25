@@ -1,8 +1,13 @@
 function findClique(graph, minimalCliqueSize) {
-      var cliques = allCliques(graph);
-      return typeof(cliques.find(function(clique) {
-        return clique.length >= minimalCliqueSize;
-      })) != "undefined";
+    var cliques = allCliques(graph);
+    console.log(cliques);
+    for(var i = 0; i < cliques.length; i++)
+    {
+        if (cliques[i].length >= minimalCliqueSize) {
+            return true;
+        }
+    }
+    return false;
 }
 
 
@@ -16,12 +21,17 @@ function allCliques(g){
       }
     }
 
-    var r =[];
-    var x=[];
+    var r = [];
+    var x = [];
 
     bronKerbosch(g, r, p, x, cliques);
     return cliques;
 }
+
+// g - graph in which we want to find a clique
+// r - already found cliques
+// p - candidate nodes
+// x - skipped nodes
 
 function bronKerbosch(g, r, p, x, cliques) {
     if (p.length===0 && x.length===0){

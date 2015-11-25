@@ -2,14 +2,7 @@
   "name": "RamseyGameOfClique",
   "version": "0.1.0",
   "license": "MIT",
-<<<<<<< HEAD
-  "repository": {
-    "type": "git",
-     "url": "https://github.com/dzitkowskik/RamseyGameOfClique.git"
-  },
-=======
   "repository": "https://github.com/dzitkowskik/RamseyGameOfClique.git",
->>>>>>> master
   "contributors": [
     {
       "name": "Karol Dzitkowski",

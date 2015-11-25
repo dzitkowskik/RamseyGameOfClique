@@ -2,11 +2,16 @@
 <html lang="en">
   <head>
     <link rel="stylesheet" href="RamseyGameOfClique.css">
-    <script src="libs.js"></script>
-    <script src="RamseyGameOfClique.js"></script>
     <title>Ramsey Game Of Clique</title>
   </head>
   <body>
+    <div id="first" style="background-image: url(http://www.ilovebodybuilding.pl/images/robertburneika/9.jpg); background-repeat: no-repeat; background-size: 100% auto; text-align: center;" onclick="close_white_content()" class="white_content">
+      <h1 style="margin-top: 35%; color: red;">First player win.</h1>
+    </div>
+    <div id="second" style="background-image: url(http://www.ilovebodybuilding.pl/images/robertburneika/9.jpg); background-repeat: no-repeat; background-size: 100% auto; text-align: center;" onclick="close_white_content();" class="white_content">
+      <h1 style="margin-top: 35%; color: red;">Second player win.</h1>
+    </div>
+    <div id="fade" class="black_overlay"></div>
     <div class="pure-g-r">
       <div class="pure-u-1 topHeaderSmaller">
         <header>
@@ -14,17 +19,27 @@
         </header>
       </div>
     </div>
-    <div class="newgame"></div>
-    <form name="new_game" action="http://dzitkowskik.github.io/RamseyGameOfClique/dist/index.html" method="get">
-      <label for="graph_size">Graph size:          </label>
-      <input type="number" name="graph_size">
-      <label for="minimal_clique_size">Minimal Clique size:</label>
-      <input type="number" name="minimal_clique_size">
-      <input type="submit" value="New Game">
-    </form>
+    <div class="newgame">
+      <form name="new_game" method="get">
+        <div class="gprah-size">
+          <label for="graph_size">Graph size:</label>
+          <input type="number" id="graph_size" name="graph_size">
+        </div>
+        <div class="clique-size">
+          <label for="minimal_clique_size">Minimal Clique size:</label>
+          <input type="number" id="minimal_clique_size" name="minimal_clique_size">
+        </div>
+        <div class="button">
+          <label for="submit"></label>
+          <input type="submit" value="New Game">
+        </div>
+      </form>
+    </div>
     <div id="mainContainer" class="pure-g-r">
       <div id="graphContainer" class="pure-u-1"></div>
     </div>
   </body>
+  <script src="libs.js"></script>
+  <script src="RamseyGameOfClique.js"></script>
   <script>StartApplication();</script>
 </html>

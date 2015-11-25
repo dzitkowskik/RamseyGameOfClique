@@ -1,0 +1,143 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{indentfirst}
+\usepackage{fullpage}
+\usepackage{enumerate}
+\usepackage{secdot}
+\usepackage{verbatim}
+\usepackage{graphicx}
+
+\usepackage{amsthm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+
+\selectlanguage{polish}
+\frenchspacing
+
+% Zdefiniowanie autorów i~tytułu:
+\author{
+	Karol Dzitkowski\\
+	Robert Jakubowski\\
+	Tomasz Janiszewski
+}
+\title{
+	Teoria Ramseya\\
+	\huge{Ramsey Game - gra dwuosobowa}\\
+	Teoretyczny opis problemu
+ }
+
+\begin{document}
+\maketitle
+\newpage
+
+% Wstawienie spisu tresci:
+\tableofcontents
+\newpage
+
+%Treść:
+\section{Wstęp}
+Grafy w swej charakterystyce dają duże możliwości.
+ Ich natura sprawia, że mimo współczesnego zaawansowania matematyki,
+ ciągle można w nich wiele odkryć. Jednym z popularno-naukowych odkryć jest gra Ramseya,
+ która ma proste zasady, a jednocześnie jest ściśle związana z teorią grafów.
+
+\section{Definicje}
+\begin{definition}
+Grafem nazywamy parę $G=(V,E)$, gdzie $V$ jest niepustym zbiorem skończonym a $E$ jest dowolnym
+podzbiorem zbioru nieuporządkowanych par elementów zbioru $V$, $E \in P_2(V)$.
+\end{definition}
+
+\begin{definition}
+Grafem, w którym każde dwa wierzchołki sąsiadują nazywamy grafem pełnym.
+Graf pełny o $n$ wierzchołkach będziemy oznaczać $K_n$.
+\end{definition}
+
+\begin{definition}
+Dla każdego grafu $G$ i liczby naturalnej $k$, krawędziowym $k$-pokolorowaniem $G$ nazywamy
+funkcję $f:E(G)\rightarrow\{1,2, \dots ,k\}$ taką, że
+$\forall i \in \{1,2, \dots ,k\}$, zbiór $f^1(\{i\})$ jest niepusty i
+niezależny
+\end{definition}
+
+\begin{definition}
+Liczbą Ramseya  $R (q_1, q_2, q_3, \ldots, q_k )$  dla
+$k, q_1, q_2, \ldots, q_k \in N$ i
+$k \ge 2$
+nazywamy najmniejszą liczbę $n$,
+taką że dla dowolnego $k$-pokolorowania krawędziowego $n$-wierzchołkowego grafu pełnego istnieje
+$i, 1 \le i \le k$, takie, że w pokolorowanym grafie jest klika rozmiaru $q_i$,
+której wszystkie krawędzie są w kolorze $i$.
+\end{definition}
+
+\section{Gra Ramseya}
+W grze Ramseya biora udział dwie ($2$) osoby.
+Planszą jest graf pełny, który składa się ze skończonej, ustalonej liczby wierzchołków.
+Każdy z graczy stara się stworzyć klikę o zadanej wielkości zaznaczając
+na przemian krawędzie własnym kolorem. Wygrywa gracz,
+który pierwszy utworzy klikę o zadanej wielkości w swoim kolorze.
+
+\section{Złożonośc problemu}
+
+\subsection{Wielkość tworzonej kliki}
+Dla kliki o wielkości $2$ problem jest trywialny -- wystarczy narysować jedną krawędź.
+Klika 3-wierzchołkowa zawiera w sobie $3$ krawędzie.
+ Gra w takim układzie ciągle nie jest trudna do przeanalizowania.
+Sytuacja się zmienia, gdy weżmiemy pod uwagę kliki $4$-wierzchołkowe i $5$-wierzchołkowe.
+Już samo znalezienie takiej kliki w grafie nie jest zadaniem trywialnym,
+a co dopiero konkurowanie w jej tworzeniu.
+Wzrost wielkości liczby krawędzi w klice od liczby jej wierzchołków jest kwadratowy i
+wyraża się wzorem: $k = \frac{n(n - 1)}{2}$
+
+\subsection{Wielkość grafu wejściowego}
+Skomplikowanie gry zależy też od wielkości grafu wejściowego.
+Zwiększanie ilości wierzchołków będzie powodowało duży wzrost wariantów przebiegu gry.
+Z góry tą wielkość można oszacować poprzez $k! = \frac{n(n - 1)}{2}!$
+, gdzie $k$ - liczba krawędzi, $n$ - liczba wierzchołków.
+Przebieg gry można zapisywać jako ciąg wybieranych krawędzi.
+W pierwszym ruchu gracz1 ma do wyboru k krawędzi. Gracz2 $k-1$ krawędzi.
+W drugim ruchu gracz1 $k-2$ krawędzi, a gracz2 $k-3$ krawędzi, itd.
+Oczywiście tę wartość można zmniejszyć, ponieważ wiele gier ma przebieg symetryczny.
+W szczególności nie jest istotne, która krawędź zostnie wybrana na początku gry.
+
+\section{Minimalny rozmiar planszy}
+O remisie w grze mówimy, gdy żadnemu z graczy nie udało się stworzyć kliki o zadanej wielkości.\\
+Gra będzie remisowa zawsze, gdy rozmiar kliki jest większy niż rozmiar planszy.
+Dówód jest dość oczywisty -- gracz nie może stworzyć tej kilki,
+ponieważ nie dysponuje wystarczającą ilością wierzchołków.\\
+Tę wartość jeszcze można zmniejszyć.
+Należy pamiętać, że gracze wykonują ruchu na zmianę. Oznacza to,
+że gdy gracz1 wykonał $n$ ruchów, to gracz2 wykonał przynajmniej $n-1$ ruchów.
+Stworzenie kliku kładającej się z $x$ wierchołków wymaga $\frac{x(x-1)}{2}$ krawędzi.
+Tym samym, aby zakońćzyć grę na planszy musi pojawić się przynajmniej $x(x-1) - 1$ krawędzi.
+Dla planszy o y wierzchołkach mamy $\frac{y(y - 1)}{2}$ wierzchołków.
+Oznacza to, że remis padnie zawsze, gdy $\frac{y(y-1)}{2} < x(x-1) - 1$\\
+Ciekawe jest to, że taka sytuacja, gdzie nie może zostać wyłoniony zwycięzca zdarza się,
+gdy mamy planszę wielkości $5$ oraz próbujemy stworzyć klikę wielkości $4$.
+
+\medskip
+
+\begin{thebibliography}{9}
+
+\bibitem{tracz}
+Tomasz Tracz: \textit{Matematyka Dyskretna}
+\\\texttt{http://www.mini.pw.edu.pl/~tomtracz/md/info\_matematyka.html}
+\bibitem{wiki}
+Wikipedia: \textit{Twierdzenie Ramseya}
+\\\texttt{https://pl.wikipedia.org/wiki/Twierdzenie\_Ramseya}
+\bibitem{wazniak}
+Wazniak: \textit{Własności podziałowe i Twierdzenie Ramsey'a}
+\\\texttt{http://wazniak.mimuw.edu.pl/index.php?title=Matematyka\_dyskretna\_2/Wyk\%C5\%82ad\_3:}
+\bibitem{robin}
+Robin J. Wilson: \textit{Wprowadzenie do teorii grafów}
+Wydawnictwo Naukowe PWN, 2012 (copyright 2007)
+\end{thebibliography}
+\end{document}

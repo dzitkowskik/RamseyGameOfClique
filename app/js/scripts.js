@@ -26,8 +26,19 @@ var clickedNodeColor = '#FF0000';
 var numberOfVertices = params.graph_size || 10;
 var minimalCliqueSize = params.minimal_clique_size || 3;
 
-console.log(numberOfVertices)
+$('#graph_size').val(numberOfVertices);
+$('#minimal_clique_size').val(minimalCliqueSize);
 
+function CleanScreen() {
+  document.getElementById('first').style.display='none';
+  document.getElementById('second').style.display='none';
+  document.getElementById('fade').style.display='none';
+}
+
+function close_white_content() {
+    $('.white_content').hide();
+    $('#fade').hide();
+}
 /**
  * @return {string}
  */
@@ -110,8 +121,12 @@ var firstPlayerGraph = {};
 var secondPlayerGraph = {};
 
 function StartApplication() {
+    CleanScreen();
+    firstPlayerGraph = {};
+    secondPlayerGraph = {};
     var g = GenerateFullGraph(numberOfVertices);
     var s = DrawGraphInContainer('graphContainer', g);
+
 
     var setEdgeColor = function(color, fromNode, toNode) {
         if(fromNode !== '' && toNode !== '') {
@@ -173,12 +188,18 @@ function StartApplication() {
             if(turn) {
               setEdgeColor(firstPlayerColor, from, to);
               addEdgeToPlayerGraph(firstPlayerGraph, from, to);
-              findClique(firstPlayerGraph, minimalCliqueSize);
+              if (findClique(firstPlayerGraph, minimalCliqueSize) === true) {
+                document.getElementById('first').style.display='block';
+                document.getElementById('fade').style.display='block';
+              }
             }
             else {
               setEdgeColor(secondPlayerColor, from, to);
               addEdgeToPlayerGraph(secondPlayerGraph, from, to);
-              findClique(secondPlayerGraph, minimalCliqueSize);
+              if (findClique(secondPlayerGraph, minimalCliqueSize) === true) {
+                document.getElementById('second').style.display='block';
+                document.getElementById('fade').style.display='block';
+              }
             }
             endTurn();
         }

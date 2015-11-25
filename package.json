@@ -2,10 +2,14 @@
   "name": "RamseyGameOfClique",
   "version": "0.1.0",
   "license": "MIT",
+<<<<<<< HEAD
   "repository": {
     "type": "git",
      "url": "https://github.com/dzitkowskik/RamseyGameOfClique.git"
   },
+=======
+  "repository": "https://github.com/dzitkowskik/RamseyGameOfClique.git",
+>>>>>>> master
   "contributors": [
     {
       "name": "Karol Dzitkowski",
@@ -30,7 +34,7 @@
     "grunt-contrib-stylus": "~0.11.0",
     "grunt-contrib-uglify": "~0.2.7",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-node-webkit-builder": "~1.0.2",
-    "grunt-serve": "^0.1.6"
+    "grunt-serve": "^0.1.6",
+    "grunt-node-webkit-builder": "~1.0.2"
   }
 }

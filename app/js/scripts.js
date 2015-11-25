@@ -26,16 +26,18 @@ var clickedNodeColor = '#FF0000';
 var numberOfVertices = params.graph_size || 10;
 var minimalCliqueSize = params.minimal_clique_size || 3;
 
+$('#graph_size').val(numberOfVertices);
+$('#minimal_clique_size').val(minimalCliqueSize);
+
 function CleanScreen() {
   document.getElementById('first').style.display='none';
   document.getElementById('second').style.display='none';
   document.getElementById('fade').style.display='none';
 }
 
-function ReloadGame() {
-    numberOfVertices = $('#graph_size').val();
-    minimalCliqueSize = $('#minimal_clique_size').val();
-    StartApplication();
+function close_white_content() {
+    $('.white_content').hide();
+    $('#fade').hide();
 }
 /**
  * @return {string}
@@ -125,6 +127,7 @@ function StartApplication() {
     var g = GenerateFullGraph(numberOfVertices);
     var s = DrawGraphInContainer('graphContainer', g);
 
+
     var setEdgeColor = function(color, fromNode, toNode) {
         if(fromNode !== '' && toNode !== '') {
             var fromTo = s.graph.edges(GetEdgeName(fromNode, toNode));
@@ -194,7 +197,7 @@ function StartApplication() {
               setEdgeColor(secondPlayerColor, from, to);
               addEdgeToPlayerGraph(secondPlayerGraph, from, to);
               if (findClique(secondPlayerGraph, minimalCliqueSize) === true) {
-                document.getElementById('secondram').style.display='block';
+                document.getElementById('second').style.display='block';
                 document.getElementById('fade').style.display='block';
               }
             }

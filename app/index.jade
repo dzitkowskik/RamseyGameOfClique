@@ -7,15 +7,15 @@ html(lang='en')
       ' url(http://www.ilovebodybuilding.pl/images/robertburneika/9.jpg);' +
       ' background-repeat: no-repeat;' +
       ' background-size: 100% auto;' +
-      ' text-align: center;', onclick='window.location.reload();')
+      ' text-align: center;', onclick='close_white_content()')
         h1(style='margin-top: 35%; color: red;') First player win.
 
       .white_content#second(style='background-image:' +
       ' url(http://www.ilovebodybuilding.pl/images/robertburneika/9.jpg);' +
       ' background-repeat: no-repeat;' +
       ' background-size: 100% auto;' +
-      ' text-align: center;', onclick='window.location.reload();')
-          h1(style='margin-top: 35%; color: red;') Second player win. 3=> () arg1 arg2
+      ' text-align: center;', onclick='close_white_content();')
+          h1(style='margin-top: 35%; color: red;') Second player win.
 
       .black_overlay#fade
 
@@ -23,13 +23,13 @@ html(lang='en')
         .pure-u-1.topHeaderSmaller
           include includes/commons/_header
       .newgame
-        form(name="new_game", action="#", method="get")
+        form(name="new_game", method="get")
           .gprah-size
             label(for='graph_size') Graph size:
-            input(type="number", name="graph_size")
+            input(type="number", id="graph_size", name="graph_size")
           .clique-size
             label(for='minimal_clique_size') Minimal Clique size:
-            input(type="number", name="minimal_clique_size")
+            input(type="number", id="minimal_clique_size", name="minimal_clique_size")
           .button
             label(for='submit')
             input(type="submit", value="New Game")

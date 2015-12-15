@@ -157,6 +157,18 @@ function StartApplication() {
       graph[toNode].push(fromNode);
     };
 
+    var markClique = function(clique) {
+      clique.forEach(function(begin) {
+        clique.forEach(function(end) {
+          if (begin != end) {
+             s.graph.edges(GetEdgeName(begin, end)).color = clickedNodeColor;
+             s.graph.edges(GetEdgeName(end, begin)).color = clickedNodeColor;
+          }
+        });
+      });
+      s.refresh();
+    };
+
     s.bind('overNode', function(e) {
         var nodeId = e.data.node.id;
         if(nodeId != from) {
@@ -185,20 +197,26 @@ function StartApplication() {
             to = nodeId;
             color = defaultNodeColor;
             s.graph.nodes(from).color = color;
+            var clique = [];
             if(turn) {
               setEdgeColor(firstPlayerColor, from, to);
               addEdgeToPlayerGraph(firstPlayerGraph, from, to);
-              if (findClique(firstPlayerGraph, minimalCliqueSize) === true) {
+              clique = findClique(firstPlayerGraph, minimalCliqueSize);
+              console.log(clique);
+              if (clique.length > 0) {
                 document.getElementById('first').style.display='block';
                 document.getElementById('fade').style.display='block';
+                markClique(clique);
               }
             }
             else {
               setEdgeColor(secondPlayerColor, from, to);
               addEdgeToPlayerGraph(secondPlayerGraph, from, to);
-              if (findClique(secondPlayerGraph, minimalCliqueSize) === true) {
+              clique = findClique(secondPlayerGraph, minimalCliqueSize);
+              if (clique.length > 0) {
                 document.getElementById('second').style.display='block';
                 document.getElementById('fade').style.display='block';
+                markClique(clique);
               }
             }
             endTurn();

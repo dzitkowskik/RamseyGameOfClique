@@ -4,10 +4,10 @@ function findClique(graph, minimalCliqueSize) {
     for(var i = 0; i < cliques.length; i++)
     {
         if (cliques[i].length >= minimalCliqueSize) {
-            return true;
+            return cliques[i];
         }
     }
-    return false;
+    return [];
 }
 
 

@@ -97,6 +97,15 @@ module.exports = function (grunt) {
                 files: ['app/js/scripts.js', 'app/js/ramsey.js'],
                 tasks: ['jshint', 'concat', 'uglify']
             }
+        },
+        connect: {
+          server: {
+            options: {
+              livereload: true,
+              base: 'dist/',
+              port: 9009
+            }
+          }
         }
     });
 
@@ -109,9 +118,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-stylus');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-serve');
 
     grunt.registerTask('default', ['copy', 'stylus', 'cssmin', 'jade', 'jshint', 'concat', 'uglify']);
     grunt.registerTask('karol', ['copy', 'stylus', 'cssmin', 'jade', 'jshint', 'concat', 'uglify', 'nodewebkit']);
     grunt.registerTask('dev', ['copy', 'stylus', 'cssmin', 'jade', 'jshint', 'concat']);
+    grunt.registerTask('serve', ['dev', 'connect:server', 'watch']);
 };
